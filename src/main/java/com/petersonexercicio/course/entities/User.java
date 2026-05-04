@@ -1,9 +1,12 @@
 package com.petersonexercicio.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,16 +22,19 @@ public class User implements Serializable {
 
     private String name;
     private String email;
-    private String fone;
+    private String telephone;
     private String password;
 
-    public User(){}
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private final List<Order> orders = new ArrayList<>();
 
-    public User(Long id, String name, String email, String fone, String password) {
+    public User(){}
+    public User(Long id, String name, String email, String telephone, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.fone = fone;
+        this.telephone = telephone;
         this.password = password;
     }
 
@@ -56,12 +62,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getFone() {
-        return fone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setFone(String fone) {
-        this.fone = fone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getPassword() {
@@ -70,6 +76,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders(){
+        return this.orders;
     }
 
     @Override
