@@ -36,7 +36,7 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
 
-    private final Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     public Product(){}
 
