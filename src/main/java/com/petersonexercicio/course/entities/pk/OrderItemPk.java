@@ -1,10 +1,10 @@
 package com.petersonexercicio.course.entities.pk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.petersonexercicio.course.entities.Order;
 import com.petersonexercicio.course.entities.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 
 import java.io.Serial;
