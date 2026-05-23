@@ -3,9 +3,11 @@ package com.petersonexercicio.course.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petersonexercicio.course.entities.enums.OrderStatus;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
@@ -91,6 +93,12 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public BigDecimal getTotal(){
+        return items.stream()
+                .map(OrderItem::getSubTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
