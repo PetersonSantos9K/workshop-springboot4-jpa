@@ -2,7 +2,10 @@ package com.petersonexercicio.course.services;
 
 import com.petersonexercicio.course.entities.User;
 import com.petersonexercicio.course.repositories.UserRepository;
+import com.petersonexercicio.course.services.exceptions.DatabaseException;
+import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +24,9 @@ public class UserService {
 
         Optional<User> obj = userRepository.findById(id);
 
-        return obj.get();
+        return obj.orElseThrow(
+                () -> new ResourceNotFoundException(id)
+        );
     }
 
     public User insert(User user){
@@ -29,7 +34,18 @@ public class UserService {
     }
 
     public void delete(Long id){
-        userRepository.deleteById(id);
+
+        try{
+            boolean exists = userRepository.existsById(id);
+            if (!exists){
+                throw new ResourceNotFoundException(id);
+            }
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
+
     }
 
     public User update(Long id, User user){
