@@ -1,8 +1,6 @@
-package com.petersonexercicio.course.resources;
+package com.petersonexercicio.course.controllers;
 
-import com.petersonexercicio.course.entities.Category;
 import com.petersonexercicio.course.entities.Product;
-import com.petersonexercicio.course.services.CategoryService;
 import com.petersonexercicio.course.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

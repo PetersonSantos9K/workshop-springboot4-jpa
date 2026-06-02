@@ -1,4 +1,4 @@
-package com.petersonexercicio.course.resources;
+package com.petersonexercicio.course.controllers;
 
 import com.petersonexercicio.course.entities.User;
 import com.petersonexercicio.course.services.UserService;

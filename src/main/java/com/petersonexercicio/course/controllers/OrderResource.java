@@ -1,4 +1,4 @@
-package com.petersonexercicio.course.resources;
+package com.petersonexercicio.course.controllers;
 
 import com.petersonexercicio.course.entities.Order;
 import com.petersonexercicio.course.services.OrderService;

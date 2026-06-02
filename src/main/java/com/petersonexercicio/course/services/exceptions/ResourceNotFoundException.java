@@ -1,5 +1,4 @@
 package com.petersonexercicio.course.services.exceptions;
-
 import java.io.Serial;
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.petersonexercicio.course.resources.exceptions;
+package com.petersonexercicio.course.controllers.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

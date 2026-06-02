@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -27,7 +25,7 @@ public class User implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private final List<Order> orders = new ArrayList<>();
+    private final Set<Order> orders = new HashSet<>();
 
     public User(){}
     public User(Long id, String name, String email, String telephone, String password) {
@@ -78,7 +76,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<Order> getOrders(){
+    public Set<Order> getOrders(){
         return this.orders;
     }
 
@@ -93,6 +91,4 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-
 }
