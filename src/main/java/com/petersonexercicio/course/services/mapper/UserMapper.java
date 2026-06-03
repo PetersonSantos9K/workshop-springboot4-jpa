@@ -1,36 +1,38 @@
 package com.petersonexercicio.course.services.mapper;
 
-import com.petersonexercicio.course.dto.request.UserRequestDTO;
-import com.petersonexercicio.course.dto.response.OrderResponseDTO;
+import com.petersonexercicio.course.dto.request.create.UserRequestDTO;
 import com.petersonexercicio.course.dto.response.UserResponseDTO;
 import com.petersonexercicio.course.entities.User;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Component
 public class UserMapper {
 
-
-    public User toEntity(UserRequestDTO obj){
-        return new User(
-                null,
-                obj.name(),
-                obj.email(),
-                obj.telephone(),
-                obj.password()
-        ) ;
+    private final OrderMapper orderMapper;
+    public UserMapper(final OrderMapper orderMapper){
+        this.orderMapper = orderMapper;
     }
 
-    public UserResponseDTO toResponse(User user, Set<OrderResponseDTO> orders){
+    public User toEntity(UserRequestDTO userRequest){
+        return new User(
+                null,
+                userRequest.name(),
+                userRequest.email(),
+                userRequest.telephone(),
+                userRequest.password()
+        );
+    }
+
+    public UserResponseDTO toResponse(User user){
         return new UserResponseDTO(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getTelephone(),
-                orders
+                user.getOrders().stream().map(orderMapper::toResponse).collect(Collectors.toSet())
         );
     }
-
-
 }

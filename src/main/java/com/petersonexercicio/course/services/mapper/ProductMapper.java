@@ -1,6 +1,6 @@
 package com.petersonexercicio.course.services.mapper;
 
-import com.petersonexercicio.course.dto.request.ProductRequestDTO;
+import com.petersonexercicio.course.dto.request.create.ProductRequestDTO;
 import com.petersonexercicio.course.dto.response.ProductResponseDTO;
 import com.petersonexercicio.course.entities.Product;
 import org.springframework.stereotype.Component;
@@ -20,12 +20,6 @@ public class ProductMapper {
     }
 
     public ProductResponseDTO toResponse(Product product){
-        return new ProductResponseDTO(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getImgUrl()
-        );
+        return null;
     }
 }

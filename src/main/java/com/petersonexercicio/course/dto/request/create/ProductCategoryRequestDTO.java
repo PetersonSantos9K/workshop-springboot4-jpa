@@ -1,4 +1,4 @@
-package com.petersonexercicio.course.dto.request;
+package com.petersonexercicio.course.dto.request.create;
 
 import java.util.Set;
 
