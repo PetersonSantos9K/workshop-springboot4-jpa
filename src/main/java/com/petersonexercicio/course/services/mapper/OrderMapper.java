@@ -15,7 +15,7 @@ public class OrderMapper {
         return new Order(
                 null,
                 orderRequestDTO.moment(),
-                OrderStatus.valueOf(orderRequestDTO.orderStatusCode()),
+                OrderStatus.valueOf(orderRequestDTO.status()),
                 user
         );
     }
