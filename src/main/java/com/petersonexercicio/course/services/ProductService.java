@@ -3,19 +3,15 @@ import com.petersonexercicio.course.dto.request.create.ProductRequestDTO;
 import com.petersonexercicio.course.dto.request.update.ProductUpdateRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
 import com.petersonexercicio.course.dto.response.ProductResponseDTO;
-import com.petersonexercicio.course.entities.Category;
 import com.petersonexercicio.course.entities.Product;
 import com.petersonexercicio.course.repositories.ProductRepository;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.CategoryMapper;
 import com.petersonexercicio.course.services.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +25,6 @@ public class ProductService{
     public List<ProductResponseDTO> findAll(){
 
         List<Product> products = repository.findAll();
-
         return products.stream()
                 .map(p -> {
                     Set<CategoryResponseDTO> productCategories = p.getCategories().stream()
