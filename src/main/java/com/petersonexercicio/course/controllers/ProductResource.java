@@ -6,6 +6,7 @@ import com.petersonexercicio.course.dto.response.ProductResponseDTO;
 import com.petersonexercicio.course.dto.response.UserResponseDTO;
 import com.petersonexercicio.course.entities.Product;
 import com.petersonexercicio.course.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/products")
 public class ProductResource {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> findAll(){
