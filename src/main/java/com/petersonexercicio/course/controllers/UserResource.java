@@ -3,8 +3,11 @@ package com.petersonexercicio.course.controllers;
 import com.petersonexercicio.course.dto.request.create.UserRequestDTO;
 import com.petersonexercicio.course.dto.response.UserResponseDTO;
 import com.petersonexercicio.course.services.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -14,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
+@Validated
 public class UserResource {
 
     private final UserService userService;
@@ -26,13 +30,13 @@ public class UserResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id){
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable @Positive Long id){
         UserResponseDTO obj = userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> insert(@RequestBody UserRequestDTO obj){
+    public ResponseEntity<UserResponseDTO> insert(@RequestBody @Valid UserRequestDTO obj){
         UserResponseDTO user = userService.insert(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -43,13 +47,13 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody UserRequestDTO obj){
+    public ResponseEntity<UserResponseDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid UserRequestDTO obj){
         UserResponseDTO user = userService.update(id, obj);
         return ResponseEntity.ok().body(user);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable @Positive Long id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }

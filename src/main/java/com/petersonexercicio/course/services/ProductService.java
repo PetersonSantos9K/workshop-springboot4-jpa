@@ -1,10 +1,14 @@
 package com.petersonexercicio.course.services;
+import com.petersonexercicio.course.dto.request.create.ProductCategoryRequestDTO;
 import com.petersonexercicio.course.dto.request.create.ProductRequestDTO;
 import com.petersonexercicio.course.dto.request.update.ProductUpdateRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
 import com.petersonexercicio.course.dto.response.ProductResponseDTO;
+import com.petersonexercicio.course.entities.Category;
 import com.petersonexercicio.course.entities.Product;
+import com.petersonexercicio.course.repositories.CategoryRepository;
 import com.petersonexercicio.course.repositories.ProductRepository;
+import com.petersonexercicio.course.services.exceptions.DatabaseException;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.CategoryMapper;
 import com.petersonexercicio.course.services.mapper.ProductMapper;
@@ -19,8 +23,11 @@ import java.util.stream.Collectors;
 public class ProductService{
 
     private final ProductRepository repository;
+    private final CategoryRepository categoriesRepository;
+
     private final ProductMapper mapper;
     private final CategoryMapper categoryMapper;
+
 
     public List<ProductResponseDTO> findAll(){
 
@@ -53,6 +60,30 @@ public class ProductService{
 
         return mapper.toResponse(product, categories);
     }
+
+    public ProductResponseDTO insertCategory(Long id, ProductCategoryRequestDTO request){
+
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
+        Product product = repository.getReferenceById(id);
+
+        Set<Category> categories = new HashSet<>(categoriesRepository.findAllById(request.categoryIds().stream().toList()));
+
+        boolean categoryAddSuccess = product.getCategories().addAll(categories);
+        if(!categoryAddSuccess){
+            throw new DatabaseException("Failed to add categories to product with id " + id);
+        }
+
+        product = repository.save(product);
+
+        Set<CategoryResponseDTO> categoryResponses = product.getCategories().stream()
+                .map(categoryMapper::toResponse)
+                .collect(Collectors.toSet());
+
+        return mapper.toResponse(product, categoryResponses);
+    }
+
 
     public ProductResponseDTO update(Long id, ProductUpdateRequestDTO request){
         if(!repository.existsById(id)){

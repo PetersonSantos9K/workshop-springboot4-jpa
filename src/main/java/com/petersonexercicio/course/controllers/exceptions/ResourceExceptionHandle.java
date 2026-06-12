@@ -5,10 +5,13 @@ import com.petersonexercicio.course.services.exceptions.ResourceNotFoundExceptio
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class ResourceExceptionHandle {
@@ -42,4 +45,26 @@ public class ResourceExceptionHandle {
         );
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        String error = "Validations errors";
+
+        e.getBindingResult()
+                .getFieldErrors()
+                .forEach(err -> errors.put(err.getField(), err.getDefaultMessage()));
+
+        ValidationError err = new ValidationError(
+                Instant.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                errors,
+                error,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
 }

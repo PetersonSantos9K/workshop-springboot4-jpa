@@ -2,16 +2,14 @@ package com.petersonexercicio.course.controllers;
 
 import com.petersonexercicio.course.dto.request.create.CategoryRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
-import com.petersonexercicio.course.entities.Category;
 import com.petersonexercicio.course.services.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -27,12 +25,12 @@ public class CategoryResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id){
+    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable @Valid Long id){
         return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody CategoryRequestDTO request){
+    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody @Valid CategoryRequestDTO request){
         CategoryResponseDTO category = service.insert(request);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -43,12 +41,12 @@ public class CategoryResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryResponseDTO> update(@PathVariable Long id, @RequestBody CategoryResponseDTO request){
+    public ResponseEntity<CategoryResponseDTO> update(@PathVariable @Valid Long id, @RequestBody @Valid CategoryResponseDTO request){
         return ResponseEntity.ok().body(service.update(id, request));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable @Valid Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
