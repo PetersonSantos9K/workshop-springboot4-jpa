@@ -3,6 +3,7 @@ import com.petersonexercicio.course.dto.request.create.UserRequestDTO;
 import com.petersonexercicio.course.dto.response.UserResponseDTO;
 import com.petersonexercicio.course.entities.User;
 import com.petersonexercicio.course.repositories.UserRepository;
+import com.petersonexercicio.course.services.exceptions.ResourceAlreadyRegistered;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class UserService{
 
         boolean exists = repository.existsByEmail(obj.email());
         if(exists){
-            System.out.println("Lançar um erro.");
+            throw new ResourceAlreadyRegistered(obj.email());
         }
         User user = repository.save(mapper.toEntity(obj));
         return mapper.toResponse(user);

@@ -1,10 +1,8 @@
 package com.petersonexercicio.course.dto.request.create;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.time.Instant;
+import java.util.List;
 
 public record OrderRequestDTO(
         @NotBlank(message = "Date is required")
@@ -15,5 +13,10 @@ public record OrderRequestDTO(
         Integer status,
         @NotNull(message = "User ID is required")
         @Positive(message = "User ID must be a positive integer")
-        Long userId) {
+        Long userId,
+
+        @NotEmpty(message = "List must not be empty")
+        @NotNull(message = "Items list is required")
+        List<OrderItemRequestDTO> items
+){
 }

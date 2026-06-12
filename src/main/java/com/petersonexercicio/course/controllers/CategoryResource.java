@@ -4,8 +4,10 @@ import com.petersonexercicio.course.dto.request.create.CategoryRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
 import com.petersonexercicio.course.services.CategoryService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,9 +17,12 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/categories")
+@Validated
 public class CategoryResource {
 
     private final CategoryService service;
+
+    private final String invalidId = "Id must be a positive number";
 
     @GetMapping
     public ResponseEntity<Set<CategoryResponseDTO>> findAll(){
@@ -25,12 +30,12 @@ public class CategoryResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable @Valid Long id){
+    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable @Positive(message = invalidId) Long id){
         return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody @Valid CategoryRequestDTO request){
+    public ResponseEntity<CategoryResponseDTO> insert(@RequestBody @Positive(message = invalidId) CategoryRequestDTO request){
         CategoryResponseDTO category = service.insert(request);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -41,12 +46,12 @@ public class CategoryResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryResponseDTO> update(@PathVariable @Valid Long id, @RequestBody @Valid CategoryResponseDTO request){
+    public ResponseEntity<CategoryResponseDTO> update(@PathVariable @Positive(message = invalidId) Long id, @RequestBody @Valid CategoryResponseDTO request){
         return ResponseEntity.ok().body(service.update(id, request));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @Valid Long id) {
+    public ResponseEntity<Void> delete(@PathVariable @Positive(message = invalidId) Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

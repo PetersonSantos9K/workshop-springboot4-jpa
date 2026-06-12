@@ -21,7 +21,7 @@ import java.util.List;
 public class UserResource {
 
     private final UserService userService;
-
+    private final String invalidId = "Id must be a positive number";
 
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> findAll(){
@@ -30,7 +30,7 @@ public class UserResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> findById(@PathVariable @Positive Long id){
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable @Positive(message = invalidId) Long id){
         UserResponseDTO obj = userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
@@ -47,13 +47,13 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid UserRequestDTO obj){
+    public ResponseEntity<UserResponseDTO> update(@PathVariable @Positive(message = invalidId) Long id, @RequestBody @Valid UserRequestDTO obj){
         UserResponseDTO user = userService.update(id, obj);
         return ResponseEntity.ok().body(user);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @Positive Long id){
+    public ResponseEntity<Void> delete(@PathVariable @Positive(message = invalidId) Long id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }

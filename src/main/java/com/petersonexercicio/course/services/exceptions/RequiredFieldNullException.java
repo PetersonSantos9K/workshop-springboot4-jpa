@@ -8,6 +8,6 @@ public class RequiredFieldNullException extends RuntimeException implements Seri
     private static final long serialVersionUID = 1L;
 
     public RequiredFieldNullException(String campo) {
-        super("O campo '" + campo + "' não pode ser nulo.");
+        super("The " + campo + " field cannot be null.");
     }
 }

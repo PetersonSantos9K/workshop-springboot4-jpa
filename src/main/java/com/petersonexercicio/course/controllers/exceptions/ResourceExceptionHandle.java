@@ -1,8 +1,10 @@
 package com.petersonexercicio.course.controllers.exceptions;
 
 import com.petersonexercicio.course.services.exceptions.DatabaseException;
+import com.petersonexercicio.course.services.exceptions.ResourceAlreadyRegistered;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -51,6 +53,7 @@ public class ResourceExceptionHandle {
         Map<String, String> errors = new LinkedHashMap<>();
 
         String error = "Validations errors";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
 
         e.getBindingResult()
                 .getFieldErrors()
@@ -58,7 +61,7 @@ public class ResourceExceptionHandle {
 
         ValidationError err = new ValidationError(
                 Instant.now(),
-                HttpStatus.BAD_REQUEST.value(),
+                status.value(),
                 errors,
                 error,
                 request.getRequestURI()
@@ -66,5 +69,43 @@ public class ResourceExceptionHandle {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StandardError> ConstraintViolation(ConstraintViolationException e, HttpServletRequest request) {
+        String message = "Value invalid";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        String errorMessage = e.getConstraintViolations()
+                .iterator()
+                .next()
+                .getMessage();
+
+        StandardError err = new StandardError(
+                Instant.now(),
+                status.value(),
+                message,
+                errorMessage,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ResourceAlreadyRegistered.class)
+    public ResponseEntity<StandardError> resourceAlreadyRegistered(ResourceAlreadyRegistered e, HttpServletRequest request){
+
+        String message = "Resource already registered";
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        StandardError err = new StandardError(
+                Instant.now(),
+                status.value(),
+                message,
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(err);
+    }
+
+
 
 }

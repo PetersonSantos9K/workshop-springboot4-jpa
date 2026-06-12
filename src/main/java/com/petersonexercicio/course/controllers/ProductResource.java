@@ -6,8 +6,10 @@ import com.petersonexercicio.course.dto.request.update.ProductUpdateRequestDTO;
 import com.petersonexercicio.course.dto.response.ProductResponseDTO;
 import com.petersonexercicio.course.services.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,9 +19,11 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/products")
+@Validated
 public class ProductResource {
 
     private final ProductService productService;
+    private final String invalidId = "Id must be a positive number";
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> findAll(){
@@ -27,7 +31,7 @@ public class ProductResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductResponseDTO> findById(@PathVariable @Valid Long id){
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable @Positive(message = invalidId) Long id){
         return ResponseEntity.ok().body(productService.findById(id));
     }
 
@@ -44,19 +48,19 @@ public class ProductResource {
     }
 
     @PostMapping(value = "/{id}")
-    public ResponseEntity<ProductResponseDTO> insertCategory(@PathVariable @Valid Long id, @RequestBody @Valid ProductCategoryRequestDTO request){
+    public ResponseEntity<ProductResponseDTO> insertCategory(@PathVariable @Positive(message = invalidId) Long id, @RequestBody @Valid ProductCategoryRequestDTO request){
         ProductResponseDTO product = productService.insertCategory(id, request);
         return ResponseEntity.ok().body(product);
     }
 
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductResponseDTO> update(@PathVariable @Valid Long id, @RequestBody @Valid ProductUpdateRequestDTO request){
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable @Positive(message = invalidId) Long id, @RequestBody @Valid ProductUpdateRequestDTO request){
         return ResponseEntity.ok().body(productService.update(id, request));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @Valid Long id){
+    public ResponseEntity<Void> delete(@PathVariable @Positive(message = invalidId) Long id){
         productService.delete(id);
         return ResponseEntity.noContent().build();
     }
