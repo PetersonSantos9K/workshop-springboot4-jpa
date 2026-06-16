@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.List;
 
 public record OrderRequestDTO(
-        @NotBlank(message = "Date is required")
+        @NotNull(message = "Date is required")
         @PastOrPresent(message = "Date must be in the past or present")
         Instant moment,
         @NotNull(message = "Status is required")
