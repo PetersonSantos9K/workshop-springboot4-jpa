@@ -18,7 +18,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping(value = "/categories")
 @Validated
-public class CategoryResource {
+public class CategoryController {
 
     private final CategoryService service;
 

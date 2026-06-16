@@ -22,6 +22,9 @@ public class UserService{
     private final UserMapper mapper;
 
     public List<UserResponseDTO> findAll() {
+
+
+
         return repository.findAll().stream()
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());

@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/products")
 @Validated
-public class ProductResource {
+public class ProductController {
 
     private final ProductService productService;
     private final String invalidId = "Id must be a positive number";

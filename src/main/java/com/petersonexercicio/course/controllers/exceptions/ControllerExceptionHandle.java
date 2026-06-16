@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class ResourceExceptionHandle {
+public class ControllerExceptionHandle {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
@@ -105,6 +105,22 @@ public class ResourceExceptionHandle {
         );
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> IllegalArgumentException(IllegalArgumentException e, HttpServletRequest request){
+        String message = "Value invalid";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError err = new StandardError(
+                Instant.now(),
+                status.value(),
+                message,
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(err);
+    }
+
 
 
 

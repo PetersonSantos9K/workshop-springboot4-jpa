@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
 @Validated
-public class UserResource {
+public class UserController {
 
     private final UserService userService;
     private final String invalidId = "Id must be a positive number";
