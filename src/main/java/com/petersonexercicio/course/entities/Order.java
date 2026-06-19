@@ -3,7 +3,8 @@ package com.petersonexercicio.course.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petersonexercicio.course.entities.enums.OrderStatus;
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,22 +21,31 @@ public class Order implements Serializable {
     @Serial
     private static final long serialVersionUID= 1L;
 
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @Getter
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
     private Integer orderStatus;
 
+    @Setter
+    @Getter
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
+    @Getter
     @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL)
     private Set<OrderItem> items = new HashSet<>();
 
+    @Setter
+    @Getter
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
@@ -48,22 +58,6 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
-
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
     }
@@ -72,27 +66,6 @@ public class Order implements Serializable {
         if(orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
         }
-    }
-
-    public User getClient() {
-        return client;
-    }
-
-    public void setClient(User client) {
-        this.client = client;
-    }
-
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
-    public Set<OrderItem> getItems() {
-        return items;
     }
 
     public BigDecimal getTotal(){

@@ -2,6 +2,8 @@ package com.petersonexercicio.course.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,12 +15,17 @@ public class Category implements Serializable {
     @Serial
     private static final long serialVersionUID= 1L;
 
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter
+    @Getter
     private String name;
 
     @JsonIgnore
+    @Getter
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
@@ -28,27 +35,6 @@ public class Category implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

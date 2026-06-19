@@ -5,6 +5,8 @@ import com.petersonexercicio.course.entities.pk.OrderItemPk;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,10 +19,15 @@ public class OrderItem implements Serializable {
     @Serial
     private static final long serialVersionUID= 1L;
 
-
     @EmbeddedId
     private OrderItemPk id = new OrderItemPk();
+
+    @Setter
+    @Getter
     private Integer quantity;
+
+    @Setter
+    @Getter
     private BigDecimal price;
 
     public OrderItem(){}
@@ -50,27 +57,9 @@ public class OrderItem implements Serializable {
         id.setProduct(product);
     }
 
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public BigDecimal getSubTotal(){
         return price.multiply(BigDecimal.valueOf(quantity));
     }
-
 
     @Override
     public boolean equals(Object o) {

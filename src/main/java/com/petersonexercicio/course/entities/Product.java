@@ -1,8 +1,9 @@
 package com.petersonexercicio.course.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.petersonexercicio.course.repositories.CategoryRepository;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 @Table(name="tb_product")
@@ -19,24 +19,37 @@ public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID= 1L;
 
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @Getter
     private String name;
+
+    @Setter
+    @Getter
     @Lob
     private String description;
+
+    @Setter
+    @Getter
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
+
+    @Setter
+    @Getter
     private String imgUrl;
 
+    @Getter
     @ManyToMany
     @JoinTable(
             name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
@@ -52,53 +65,8 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
     @JsonIgnore
     public Set<Order> getOrders(){
-
         Set<Order> orders = new HashSet<>();
 
         for(OrderItem item : items){
@@ -106,8 +74,6 @@ public class Product implements Serializable {
         }
         return orders;
     }
-
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
