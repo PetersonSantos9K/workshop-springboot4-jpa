@@ -1,6 +1,5 @@
 package com.petersonexercicio.course.services;
 
-
 import com.petersonexercicio.course.dto.request.create.OrderItemRequestDTO;
 import com.petersonexercicio.course.dto.request.create.OrderRequestDTO;
 import com.petersonexercicio.course.dto.request.update.OrderUpdateRequestDTO;
@@ -17,9 +16,9 @@ import com.petersonexercicio.course.repositories.UserRepository;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.OrderItemMapper;
 import com.petersonexercicio.course.services.mapper.OrderMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

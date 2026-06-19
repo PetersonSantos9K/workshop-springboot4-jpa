@@ -4,11 +4,10 @@ import com.petersonexercicio.course.dto.request.create.OrderRequestDTO;
 import com.petersonexercicio.course.dto.response.OrderItemResponseDTO;
 import com.petersonexercicio.course.dto.response.OrderResponseDTO;
 import com.petersonexercicio.course.entities.Order;
-import com.petersonexercicio.course.entities.OrderItem;
 import com.petersonexercicio.course.entities.User;
 import com.petersonexercicio.course.entities.enums.OrderStatus;
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component

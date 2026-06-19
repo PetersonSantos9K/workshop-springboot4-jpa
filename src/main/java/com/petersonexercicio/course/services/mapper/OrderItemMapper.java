@@ -1,13 +1,13 @@
 package com.petersonexercicio.course.services.mapper;
 
 import com.petersonexercicio.course.dto.response.OrderItemResponseDTO;
-import com.petersonexercicio.course.dto.response.ProductResponseDTO;
 import com.petersonexercicio.course.entities.Order;
 import com.petersonexercicio.course.entities.OrderItem;
 import com.petersonexercicio.course.entities.Product;
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
+
 @Component
 public class OrderItemMapper {
 
@@ -23,5 +23,4 @@ public class OrderItemMapper {
                 orderItem.getSubTotal()
         );
     }
-
 }

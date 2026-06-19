@@ -1,16 +1,16 @@
 package com.petersonexercicio.course.services;
+
 import com.petersonexercicio.course.dto.request.create.CategoryRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
 import com.petersonexercicio.course.entities.Category;
 import com.petersonexercicio.course.repositories.CategoryRepository;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.CategoryMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
 import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor

@@ -4,8 +4,8 @@ import com.petersonexercicio.course.dto.request.create.ProductRequestDTO;
 import com.petersonexercicio.course.dto.response.CategoryResponseDTO;
 import com.petersonexercicio.course.dto.response.ProductResponseDTO;
 import com.petersonexercicio.course.entities.Product;
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component

@@ -1,4 +1,5 @@
 package com.petersonexercicio.course.services;
+
 import com.petersonexercicio.course.dto.request.create.ProductCategoryRequestDTO;
 import com.petersonexercicio.course.dto.request.create.ProductRequestDTO;
 import com.petersonexercicio.course.dto.request.update.ProductUpdateRequestDTO;
@@ -12,9 +13,9 @@ import com.petersonexercicio.course.services.exceptions.DatabaseException;
 import com.petersonexercicio.course.services.exceptions.ResourceNotFoundException;
 import com.petersonexercicio.course.services.mapper.CategoryMapper;
 import com.petersonexercicio.course.services.mapper.ProductMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,6 @@ public class ProductService{
 
     private final ProductMapper mapper;
     private final CategoryMapper categoryMapper;
-
 
     public List<ProductResponseDTO> findAll(){
 
@@ -83,7 +83,6 @@ public class ProductService{
 
         return mapper.toResponse(product, categoryResponses);
     }
-
 
     public ProductResponseDTO update(Long id, ProductUpdateRequestDTO request){
         if(!repository.existsById(id)){

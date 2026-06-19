@@ -23,6 +23,7 @@ public class User implements Serializable {
     private Long id;
 
     @Setter
+    @Getter
     private String name;
 
     @Setter
